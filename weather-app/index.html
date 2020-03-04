@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Weather</title>
+  <link href='styles.css' type='text/css' rel='stylesheet'>
+</head>
+
+<body>
+  <header>
+    Weather
+  </header>
+  <div id="weather-block">
+    <div class='input-container'>
+      <div  class='block'>
+        <label for='search-city'>Input City:</label>
+        <input id='search-city' type='text' placeholder='City OR Zip Code'>
+      </div >
+      <div class='block'>
+        <label for='search-country'>Input Country (optional):</label>
+        <input id='search-country' type='text' placeholder='Country (optional)'>
+      </div>
+      <button id='search-submit'>Show My Weather</button>
+    </div>
+    <p id="location"></p>
+    <p id="temperature"></p>
+    <p id="feel"></p>
+    <p id="sky-status"></p>
+  </div>
+</body>
+
+<script src='script.js'></script>
+
+</html>

@@ -1,0 +1,47 @@
+async function fetchWeatherData(location) {
+    const response = await fetch('http://api.openweathermap.org/data/2.5/weather?q=' + `${location}` + '&appid=08222362b887418db5399c814820b83b', { mode: 'cors' })
+    const jsonData = await response.json();
+    return jsonData;
+  }
+ // http://api.openweathermap.org/data/2.5/weather?q=' + `${location}` + '&appid=08222362b887418db5399c814820b83b
+
+  async function updateDisplays(location) {
+    let jsonData = await fetchWeatherData(location).catch(err => console.log(err))
+    console.log(jsonData);
+  
+    let fahrenTemp = Math.round((jsonData.main.temp - 273.15) * (9 / 5) + 32);
+    displays.temperature.textContent = `Current Temp: ${fahrenTemp}\u00B0F`
+    displays.feel.textContent = `Feels Like: ${Math.round((jsonData.main.feels_like - 273.15) * (9 / 5) + 32)}\u00B0F`
+    displays.location.textContent = `City: ${jsonData.name}`;
+    displays.sky.textContent = `Sky Status: ${jsonData.weather[0].main}`;
+  }
+  
+  const searchControl = {
+    cityField: document.querySelector('#search-city'),                                            
+    countryField: document.querySelector('#search-country'),
+    submitButton: document.querySelector('#search-submit'),
+  
+    formatInput: function () {
+      let city = this.cityField.value.trim();
+      let country = this.countryField.value.trim();
+      let formattedLocation = city + ',' + country;
+      return formattedLocation
+    },
+  
+    bindButton: function () {
+      this.submitButton.addEventListener('click', () => {
+        let location = this.formatInput();
+        updateDisplays(location)
+      })
+    }
+  }
+  
+  const displays = {
+    location: document.querySelector('#location'),
+    temperature: document.querySelector('#temperature'),
+    feel: document.querySelector('#feel'),
+    sky: document.querySelector('#sky-status')
+  }
+  
+  searchControl.bindButton();
+  updateDisplays('bangalore, India');
